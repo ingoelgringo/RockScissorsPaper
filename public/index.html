@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rock Scissors Paper</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="header"></div>
+    <div id="inlogView">
+      <form action="" id="inlogForm">
+        <input type="text" placeholder="Enter name to play" id="playerName" />
+        <button type="submit">START GAME</button>
+      </form>
+    </div>
+    <div id="gameView">
+      <form action="" id="gameForm">
+        <input type="radio" name="" id="rock" />
+        <label for="rock">ROCK</label>
+        <input type="radio" name="" id="scissors" />
+        <label for="scissors">SCISSORS</label>
+        <input type="radio" name="" id="paper" />
+        <label for="paper">PAPER</label>
+        <button type="submit">PLAY</button>
+      </form>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="client.js"></script>
+  </body>
+</html>
