@@ -15,6 +15,29 @@ connectionMongoDB();
 
 app.use(express.static("public"));
 
+// ENDPOINTS
+app.get("/players", async (req, res) => {
+  try {
+    const playerInfo = await MessageModel.find();
+    return res.status(200).json(playerInfo);
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message,
+    });
+  }
+});
+
+app.delete("/players", async (req, res) => {
+  try {
+    await MessageModel.deleteMany({});
+    return res.status(200).json({ message: "Alla spelare har raderats." });
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message,
+    });
+  }
+});
+
 let players = [];
 
 io.on("connection", (socket) => {
@@ -41,10 +64,16 @@ io.on("connection", (socket) => {
 
     if (players[0].handPlayed && players[1].handPlayed) {
       let winner = checkWinner(players);
-      console.log("Winner: ", winner);
       io.emit("result", winner);
-      players.forEach((player) => (player.handPlayed = null));
-      console.log("After hands are nulled: ", players);
+      console.log(players);
+
+      const info1 = new MessageModel(players[0]);
+      info1.save();
+      const info2 = new MessageModel(players[1]);
+      info2.save();
+
+      players.forEach((player) => (player.handPlayed = ""));
+      console.log("app.js showHand: ", players);
     }
   });
 
